@@ -12,18 +12,15 @@ if (-not $isAdmin)
 Get-ExecutionPolicy
 
 # Establecer la directiva de ejecución en RemoteSigned
-Set-ExecutionPolicy RemoteSigned -Force
-
-# Ejecutar los comandos
-& slmgr.vbs -upk
+Set-ExecutionPolicy RemoteSigned -Force '-Command', 
+'slmgr.vbs -upk'
 
 # Establecer la directiva de ejecución en Unrestricted para permitir la ejecución de scripts 
-Set-ExecutionPolicy Unrestricted -Scope LocalMachine -Force
+Set-ExecutionPolicy Unrestricted -Scope LocalMachine -Force '-Command', 
+'slmgr.vbs -upk'
 
-# Ejecutar los comandos
-& slmgr.vbs -upk
-Start-Process powershell.exe -Verb runAs -ArgumentList '-Command', 'slmgr.vbs -upk'
-
+Start-Process powershell.exe -Verb runAs -ArgumentList '-Command', 
+'slmgr.vbs -upk'
 
 Start-Process powershell.exe -Verb runAs -ArgumentList '-Command',
 'slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX' -Wait
